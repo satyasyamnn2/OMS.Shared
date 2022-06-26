@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OMS.DataAccess.Shared
+namespace OMS.DataAccess.Shared.Contracts
 {
-    public interface IRepository<TEntity> where TEntity : class 
+    public interface IRepository<TEntity> where TEntity : class
     {
         Task<int> InsertOneAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task<int> InsertManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);

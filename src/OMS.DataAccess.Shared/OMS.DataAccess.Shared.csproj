@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
