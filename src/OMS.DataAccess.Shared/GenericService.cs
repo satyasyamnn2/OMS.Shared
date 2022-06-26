@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace OMS.DataAccess.Shared
 {
     public class GenericService<TEntity, TRepository> : IGenericService<TEntity, TRepository> where TEntity : class
-                                                                                              where TRepository: IRepository<TEntity>                                                                                             
+                                                                                              where TRepository: IGenericRepository<TEntity>                                                                                             
     {
         private TRepository _repository;
         public GenericService(TRepository repository)

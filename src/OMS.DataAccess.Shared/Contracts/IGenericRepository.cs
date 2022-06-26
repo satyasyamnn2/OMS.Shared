@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OMS.DataAccess.Shared.Contracts
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<int> InsertOneAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task<int> InsertManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
@@ -15,6 +15,8 @@ namespace OMS.DataAccess.Shared.Contracts
         Task<int> UpdateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
         Task<int> DeleteOneAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task<int> DeleteManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
         IEnumerable<TDest> Get<TDest>(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", Expression<Func<TEntity, TDest>> select = null);
     }
 }
