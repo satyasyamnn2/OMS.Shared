@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,5 +15,6 @@ namespace OMS.DataAccess.Shared.Contracts
         Task<int> UpdateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
         Task<int> DeleteOneAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task<int> DeleteManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        IEnumerable<TDest> Get<TDest>(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", Expression<Func<TEntity, TDest>> select = null);
     }
 }

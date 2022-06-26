@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OMS.DataAccess.Shared.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -56,5 +59,34 @@ namespace OMS.DataAccess.Shared
             return count;
         }
 
+        public IEnumerable<TDest> Get<TDest>(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", Expression<Func<TEntity, TDest>> select = null)
+        {
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                if (select == null)
+                    return (IEnumerable<TDest>)orderBy(query).ToList();
+
+                return orderBy(query).Select(select).ToList();
+            }
+            else
+            {
+                if (select == null) 
+                    return query.Select(select).ToList();
+                return (IEnumerable<TDest>)query.ToList(); 
+            }
+        }
     }
 }
